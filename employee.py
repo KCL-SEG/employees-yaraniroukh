@@ -5,8 +5,9 @@ class Employee:
     def __init__(self, name, salary):
         self.name = name
         self.salary = salary
+        self.hasCommission = False
 
-    def hasCommission(self, commission, contractNum):
+    def setCommission(self, commission, contractNum):
         self.hasCommission = True
         self.commission = commission
         self.contractNum = contractNum
@@ -28,10 +29,11 @@ class SalaryEmployee(Employee):
         if self.hasCommission:
             fstring += " and receives a "
             if self.contractNum != 0:
-                fstring += f" commission for {self.contractNum} contract(s) at {self.commission}/contract"
+                fstring += f"commission for {self.contractNum} contract(s) at {self.commission}/contract"
             else:
-                fstring += f" bonus commission of {self.commission}"
-        fstring += f". Their total pay is {self.getPay()}"
+                fstring += f"bonus commission of {self.commission}"
+        fstring += f". Their total pay is {self.get_pay()}."
+        return fstring
 
 class HourlyEmployee(Employee):
     def __init__(self, name, salary, hours):
@@ -47,14 +49,15 @@ class HourlyEmployee(Employee):
         return pay
 
     def __str__(self):
-        fstring = f"{self.name} works on a contract of {self.hours} at {self.salary}/hour"
+        fstring = f"{self.name} works on a contract of {self.hours} hours at {self.salary}/hour"
         if self.hasCommission:
             fstring += " and receives a "
             if self.contractNum != 0:
-                fstring += f" commission for {self.contractNum} contract(s) at {self.commission}/contract"
+                fstring += f"commission for {self.contractNum} contract(s) at {self.commission}/contract"
             else:
-                fstring += f" bonus commission of {self.commission}"
-        fstring += f". Their total pay is {self.getPay()}"
+                fstring += f"bonus commission of {self.commission}"
+        fstring += f". Their total pay is {self.get_pay()}."
+        return fstring
 
 # Billie works on a monthly salary of 4000.  Their total pay is 4000.
 billie = SalaryEmployee("Billie", 4000)
@@ -64,16 +67,16 @@ charlie = HourlyEmployee("Charlie", 25, 100)
 
 # Renee works on a monthly salary of 3000 and receives a commission for 4 contract(s) at 200/contract.  Their total pay is 3800.
 renee = SalaryEmployee("Renee", 3000)
-renee.hasCommission(200, 4)
+renee.setCommission(200, 4)
 
 # Jan works on a contract of 150 hours at 25/hour and receives a commission for 3 contract(s) at 220/contract.  Their total pay is 4410.
 jan = HourlyEmployee("Jan", 25, 150)
-jan.hasCommission(220, 3)
+jan.setCommission(220, 3)
 
 # Robbie works on a monthly salary of 2000 and receives a bonus commission of 1500.  Their total pay is 3500.
 robbie = SalaryEmployee("Robbie", 2000)
-jan.hasCommission(1500, 0)
+robbie.setCommission(1500, 0)
 
 # Ariel works on a contract of 120 hours at 30/hour and receives a bonus commission of 600.  Their total pay is 4200.
 ariel = HourlyEmployee("Ariel", 30, 120)
-ariel.hasCommission(600, 0)
+ariel.setCommission(600, 0)
